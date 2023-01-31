@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>RumahSehat</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: navbar(Home)"></nav>
+<div class="container">
+    <div id="container"
+        style="width: 1000px; height: 500px;">
+    </div>
+</div>
+<script th:inline="javascript">
+    $(function (){
+        Highcharts.chart('container', {
+            chart: {
+                type: 'line',
+                stylemode: true
+            },
+            
+            title: {
+                text: 'DATA PEMASUKAN DOKTER'
+            },
+            xAxis: {
+                categories: /*[[${months}]]*/ 'months'
+            },
+            series: [{
+                name :'PEMASUKAN DOKTER',
+                data: /*[[${values}]]*/ 'values'
+            }]
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

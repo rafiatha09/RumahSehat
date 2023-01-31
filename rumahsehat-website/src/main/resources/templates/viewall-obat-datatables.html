@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+	<title>RumahSehat</title>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+			integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+	<script type="text/javascript" charset="utf8"
+			src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
+<body>
+
+<nav th:replace="fragments/fragment :: navbar(Obat)"></nav>
+<div class="container">
+	<br>
+	<div class="text text-center">
+		<h2>Daftar Obat</h2>
+		<strong th:text="'Jumlah Obat: ' + ${jumlahObat}"></strong>
+	</div>
+	<div class="d-flex justify-content-between">
+		<a class="mx-2 btn btn-success" href="/">BERANDA</a>
+		<a class="mx-2 btn btn-success" th:href="@{/obat/add}">TAMBAH OBAT</a>
+	</div>
+	<div class="card m-4 p-4">
+		<div class="card-body">
+			<div class="justify-content-center">
+				<table id="table_result" class="display" style="width:100%">
+					<thead>
+					<tr>
+						<th>Id</th>
+						<th>Nama</th>
+						<th>Stok</th>
+						<th>Harga</th>
+						<th th:if="${testD}">Ubah Stok</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>Data 1</td>
+						<td>Data 2</td>
+						<td>Data 3</td>
+						<td>Data 4</td>
+						<td th:if="${testD}">Data 5</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+    var role = /*[[${testD}]]*/ 'Role User';
+    /*]]>*/
+    console.log(role);
+
+    $(document).ready(function () {
+        if (role == true) {
+            $('#table_result').DataTable({
+                "ajax": {
+                    "url": "/api/v1/list-obat",
+                    "dataSrc": ''
+                },
+                "searching": true,
+                "ordering": true,
+                "columns": [
+                    {"data": "id"},
+                    {"data": "nama_obat"},
+                    {"data": "stok"},
+                    {"data": "harga"},
+                    {
+                        "data": null,
+                        "render": function (data, type) {
+                            return '<a class="mx-2 btn btn-success" href=/obat/ubah-stock/' + data.id + '>' + 'UBAH' + '</a>';
+                        }
+                    },
+                ],
+            });
+        } else {
+            $('#table_result').DataTable({
+                "ajax": {
+                    "url": "/api/v1/list-obat",
+                    "dataSrc": ''
+                },
+                "searching": true,
+                "ordering": true,
+                "columns": [
+                    {"data": "id"},
+                    {"data": "nama_obat"},
+                    {"data": "stok"},
+                    {"data": "harga"},
+                ],
+            });
+        }
+    });
+</script>
+</body>
+
+</html>

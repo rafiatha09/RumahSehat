@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Rumah Sehat</title>
+  <meta charset="UTF-8">
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <style>
+    .container-daftar {
+      width: auto;
+      height: 180px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .section-table {
+      display: flex;
+      justify-content: center;
+    }
+
+    .container-table {
+      width: 750px;
+      height: auto;
+      border-radius: 10px;
+      border-style: solid;
+      border-width: thin;
+    }
+
+    .header-container-table {
+      height: 60px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    .tambah-karyawan {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content-container-table {
+      width: 750px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .table {
+      margin-top: 20px;
+      width: 650px;
+      height: auto;
+    }
+
+    th {
+      text-align: center;
+    }
+
+    td {
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar(Appointment)"></nav>
+<div class="container-daftar">
+  <h1 class="text-success"> Tagihan</h1>
+</div>
+<section class="section-table">
+  <div class="container-table border border-success">
+    <div class="header-container-table bg-success">
+      <h5 class="table-title text-white ml-4 mt-2">Data Tagihan</h5>
+    </div>
+    <div class="content-container-table">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>No</th>
+          <th>Tanggal</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tagihan, status : ${listTagihan}">
+          <td th:text="${status.count}"></td>
+          <td th:text="${#temporals.format(tagihan.tanggalTerbuat, 'yyyy-MM-dd')}"></td>
+          <td th:if="${tagihan.isPaid}">Not Yet</td>
+          <td th:unless="${tagihan.isPaid}">Done</td>
+          <td>
+            <div class="flex-row container-fluid">
+              <a class="btn btn-outline-success" th:href="@{/tagihan/detail/} + ${tagihan.kode} ">Detail</a>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</body>
+</html>

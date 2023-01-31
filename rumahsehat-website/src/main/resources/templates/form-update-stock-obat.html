@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>RumahSehat</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+<body>
+    <nav th:replace="fragments/fragment :: navbar(Obat)"></nav>
+    <div class="container">
+        <div class="card m-4 p-4">
+            <div class="card-body">
+                <div class="justify-content-center">    
+                    <h2 class="text text-center">Ubah Stok Obat</h2>
+                    <br>
+                    <form th:action="@{/obat/ubah-stock}" th:object="${obat}" method="POST">
+                        <input type="hidden" th:field="*{id}">
+                        <input type="hidden" th:field="*{nama_obat}">
+                        <input type="hidden" th:field="*{harga}">
+                        
+                        <label>Status:</label>
+                        <b th:if="${obat.stok}" style="color:green;">TERSEDIA</b>
+                        <b th:if="${obat.stok==0}" style="color:red;">HABIS</b>
+                        
+                        <br>
+                        <label>Stok saat ini: </label>
+                        <b th:text="${obat.stok}"></b>
+                        <br>
+                        <br>
+                        
+                        <label>Masukan stok baru</label>
+                        <input type="text" name="stok" class="form-control" th:placeholder="${obat.stok}">
+                        <br>
+
+                        <button type="submit" class="mx-2 btn btn-success">SIMPAN</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <a class="mx-2 btn btn-success" th:href="@{/obat/viewall}">KEMBALI</a>
+    </div>
+</body>
+</html>

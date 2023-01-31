@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chart</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+</head>
+
+<body>
+    <nav th:replace="fragments/fragment :: navbar(Home)"></nav>
+    <div class="chart-container pb-5 mb-5" style="width: 80%">
+        <canvas id="default-chart"></canvas>
+      </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const months = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember"
+    ];
+    $.ajax({
+        url: "/api/v1/dokter/chart-current-year",
+        method: "GET",
+        dataType: "json",
+        success: function(dokter){
+            console.log(dokter);
+        }
+    })
+
+</script>
+</html>

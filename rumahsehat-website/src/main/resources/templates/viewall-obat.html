@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+	<title>RumahSehat</title>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+<body>
+<nav th:replace="fragments/fragment :: navbar(Obat)"></nav>
+<div class="container">
+	<div class="card m-4 p-4">
+		<div class="card-body">
+			<div class="justify-content-center">
+				<table class="table">
+					<div>
+						<h2>List Obat</h2>
+						<a class="mx-2 btn btn-success" th:href="@{/obat/add}">Tambah Obat</a>
+					</div>
+					<thread>
+						<br>
+						<tr>
+							<td>No</td>
+							<td>Status</td>
+							<td>Id</td>
+							<td>Nama</td>
+							<td>Stock</td>
+							<td>Harga</td>
+							<td>Ubah Stock</td>
+						</tr>
+					</thread>
+					<tr th:each="obat : ${listObat}">
+						<td th:text="${obatStat.count}"></td>
+						<td th:text="${obat.stok} ? 'TERSEDIA' : 'SUDAH HABIS'"></td>
+						<td th:text="${obat.id}"></td>
+						<td th:text="${obat.nama_obat}"></td>
+						<td th:text="${obat.stok}"></td>
+						<td th:text="${obat.harga}"></td>
+						<td>
+							<a class="mx-2 btn btn-success" th:href="@{/obat/ubah-stock/} + ${obat.id}">Ubah</a>
+						</td>
+					</tr>
+				</table>
+				<br>
+				<a class="mx-2 btn btn-success" href="/">Home</a>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

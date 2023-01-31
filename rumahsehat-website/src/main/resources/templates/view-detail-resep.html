@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Detail Resep</title>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div class="container">
+	<nav th:replace="fragments/fragment :: navbar(Resep)"></nav>
+	<div class="col min-vh-100">
+		<div class="card m-4 p-4">
+			<div class="card-body">
+				<div class="justify-content-center">
+					<h2>Detail Resep</h2>
+					<br>
+					<div class="alert alert-danger" role="alert" th:text="${message}" th:if="${message}"></div>
+					<br>
+					<div>
+						<p th:text="'Id Resep: ' + ${idResep}"></p>
+						<br>
+						<p th:if="${resep.isDone}">Status: Terverifikasi</p>
+						<p th:unless="${resep.isDone}">Status: Belum Terverifikasi</p>
+						<br>
+						<p th:text="'Nama Dokter: ' + ${dokter.nama}"></p>
+						<br>
+						<p th:if="${apoteker != null}" th:text="'Nama Apoteker: ' + ${apoteker.nama}"></p>
+						<br>
+						<p th:text="'Nama Pasien: ' + ${pasien.nama}"></p>
+						<br>
+					</div>
+					<div th:if="${resep.listJumlahResepObat.size() != 0}">
+						<form th:action="@{/resep/viewDetail/}+${idResep}" th:object="${resep}" method="POST">
+							<input type="hidden" th:field="*{id}">
+							<input type="hidden" th:field="*{createdAt}">
+							<input type="hidden" th:field="*{listJumlahResepObat}">
+							<table class="table">
+								<thead>
+								<tr>
+									<th>No</th>
+									<th>Nama</th>
+									<th>Stok Obat</th>
+									<th>Harga Obat</th>
+									<th>Kuantitas Diminta</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr th:each="jumlahModel, iterationStatus : *{listJumlahResepObat}">
+									<td th:text="${iterationStatus.count}"></td>
+									<td th:text="${jumlahModel.obat.nama_obat}"></td>
+									<td th:text="${jumlahModel.obat.stok}"></td>
+									<td th:text="${jumlahModel.obat.harga}"></td>
+									<td th:text="${jumlahModel.kuantitas}"></td>
+								</tr>
+								</tbody>
+							</table>
+							<div th:if="${role == 1}">
+								<button th:if="${!resep.done}" class="btn btn-primary mb-3" type="submit"
+										name="verification">Verifikasi
+								</button>
+							</div>
+						</form>
+					</div>
+					<a th:if="${role == 1}" class="btn btn-primary" href="/resep">Kembali</a>
+					<a th:unless="${role == 1}" class="btn btn-primary" href="/appointment/viewall">Kembali</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</body>
+</html>

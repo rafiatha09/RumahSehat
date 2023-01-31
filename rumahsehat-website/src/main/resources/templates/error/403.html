@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>403 forbidden</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+</head>
+
+<body>
+    <nav th:replace="fragments/fragment :: navbar('404')"></nav>
+    <br>
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="text-center">
+            <h1 class="display-1 fw-bold">403</h1>
+            <p class="fs-3"> <span class="text-danger">Opps!</span> Halaman tidak dapat diakses.</p>
+            <p class="lead">
+                Halaman yang diinginkan tidak dapat diakses okeh Anda
+            </p>
+            <a href="/" class="btn btn-primary">Kembali ke Beranda</a>
+        </div>
+    </div>
+</body>
+
+</html>

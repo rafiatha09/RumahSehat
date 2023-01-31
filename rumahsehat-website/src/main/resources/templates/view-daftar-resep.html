@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <title>Daftar Resep</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar(Resep)"></nav>
+<div class="container">
+    <h2>Daftar Resep</h2>
+    <br>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID Resep</th>
+            <th>Tanggal Dibuat</th>
+            <th>Status Resep</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="resep: ${listResep}">
+            <td th:text="${resep.id}"></td>
+            <td th:text="${resep.createdAt}"></td>
+            <td>
+            <p th:if="${resep.isDone}">Done</p>
+            <p th:unless="${resep.isDone}">Not Yet</p>
+            </td>
+            <td>
+                <a th:href="@{/resep/viewDetail/} + ${resep.id}" class="btn btn-primary">Detail</a>
+            </td>
+        </tr>
+        <br>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

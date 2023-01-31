@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+
+    <head th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    </head>
+
+    <head th:fragment="js">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <script th:src="@{/js/bootstrap.min.js}"></script>
+    </head>
+</head>
+
+<body>
+    <nav th:fragment="navbar(page)" class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand font-weight-bold text-success" href="/">RumahSehat</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li sec:authorize="hasAuthority('Admin')" th:classappend="${page == 'User'} ? active : ''" class="nav-item">
+                    <a class="nav-link" href="/user">User</a>
+                </li>
+                <li sec:authorize="hasAnyAuthority('Admin', 'Dokter')" th:classappend="${page == 'Appointment'} ? active : ''" class="nav-item">
+                    <a class="nav-link" href="/appointment/viewall">Appointment</a>
+                </li>
+                <li sec:authorize="hasAnyAuthority('Admin', 'Apoteker')" th:classappend="${page == 'Resep'} ? active : ''" class="nav-item">
+                    <a class="nav-link" href="/resep">Resep</a>
+                </li>
+                <li sec:authorize="hasAnyAuthority('Admin', 'Apoteker')" th:classappend="${page == 'Obat'} ? active : ''" class="nav-item">
+                    <a class="nav-link" href="/obat/viewall">Obat</a>
+                </li>
+                <li sec:authorize="hasAnyAuthority('Admin')" th:classappend="${page == 'Obat'} ? active : ''" class="nav-item">
+                    <a class="nav-link" href="/dokter/chart">Dokter</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav pull-right">
+                <li class="nav-item">
+                    <a class="nav-item nav-link text-dark" th:text="${#httpServletRequest.remoteUser} + '   |'"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link text-dark" th:href="@{/logout}"><span
+                            class="glyphicon glyphicon-log-out"></span> Logout</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav pull-right">
+            </ul>
+        </div>
+    </nav>
+</body>
+
+</html>

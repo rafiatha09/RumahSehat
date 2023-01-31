@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+	<title>RumahSehat</title>
+	<meta charset="UTF-8">
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+	<style>
+        .header {
+            height: 150px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .back {
+            width: 70px;
+            height: 70px;
+        }
+
+        .section-content {
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 600px;
+            height: 350px;
+            border-radius: 10px;
+            border-style: solid;
+            border-width: thin;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+        }
+
+
+        .container-section {
+            height: 110px;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .container-top {
+            height: 60px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
+
+
+        .container-content {
+            width: auto;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 80px;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+	</style>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar(Appointment)"></nav>
+<section class="header">
+	<div>
+		<a class="back fa fa-angle-left btn w-100" href="/appointment/viewall"></a>
+	</div>
+	<div class="container-daftar">
+		<h1 class="text-success ml-2">Detail Appointment</h1>
+	</div>
+	<div>
+	</div>
+</section>
+<section class="section-content">
+	<div class="container border-success">
+		<div class="container-section">
+			<div class="container-top">
+				<div class="content mt-3">
+					<h2 th:text="'Appointment '+ ${appointment.kode} "></h2>
+				</div>
+			</div>
+			<hr class="solid border-success mb-4">
+			<div class="container-top">
+				<div class="content mr-1">
+					<h6 class="text-success">Dokter</h6>
+					<h6 th:text="${appointment.dokter.nama}"></h6>
+				</div>
+				<div class="mr-1">
+					<h6 class="text-success">Pasien</h6>
+					<h6 th:text="${appointment.pasien.nama}"></h6>
+				</div>
+			</div>
+			<div class="container-top mt-3">
+				<div class="content ml-2">
+					<h6 class="text-success">Waktu</h6>
+					<h6 th:text="${#temporals.format(appointment.waktuDimulai, 'HH:mm')} + '-' + ${#temporals.format(endtime, 'HH:mm')}"></h6>
+				</div>
+				<div class="mr-4">
+					<h6 class="text-success">Status</h6>
+					<h6 th:if="${appointment.done}">Done</h6>
+					<h6 th:unless="${appointment.done}" th:style="'color:red'">Not Yet</h6>
+				</div>
+			</div>
+			<div th:if="${role == 1}" class="container-content mt-3">
+				<a th:if="${appointment.resep != null}" class="btn btn-success mr-1">Detail Resep</a>
+			</div>
+			<div th:unless="${role == 1}" class="container-content mt-3">
+				<div th:if="${appointment.resep == null}">
+					<a th:if="${!appointment.done}"
+					   th:href="@{/resep/create/} + ${appointment.kode}" class="btn btn-success ml-3 mr-3">Create
+						Resep</a>
+					<a th:if="${!appointment.done}"
+					   class="btn btn-success ml-1"
+					   th:confirmation="|Apakah anda yakin tidak membuat resep terlebih dahulu?|"
+					   th:href="@{/appointment/done/} + ${appointment.kode}"
+					   onclick="if (!confirm(this.getAttribute('confirmation'))) return false">Selesai</a>
+				</div>
+				<div th:unless="${appointment.resep == null}" class="d-flex">
+					<a class="btn btn-success mr-1" th:href="@{/resep/viewDetail/} + ${appointment.resep.id} ">Detail
+						Resep</a>
+					<div th:if="${appointment.resep.done}">
+						<a th:if="${!appointment.done}" class="btn btn-success ml-1" th:href="@{/appointment/done/} + ${appointment.kode}">Selesai</a>
+					</div>
+					<div th:unless="${appointment.resep.done}">
+						<a class="btn btn-success " th:warning="|Resep belum di konfirmasi oleh Apoteker|" onclick="alert(this.getAttribute('warning'))">Selesai</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script>
+</script>
+</body>
+</html>

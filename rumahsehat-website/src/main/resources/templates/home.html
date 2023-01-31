@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+    <nav th:replace="fragments/fragment :: navbar(Home)"></nav>
+    <div class="alert alert-success d-flex justify-content-center" role="alert" th:text="${acknowledge}" th:if="${acknowledge}"></div>
+    <div class="container px-5 my-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-bolder">Selamat Datang di Rumah Sehat!</h2>
+            <p class="lead mb-0 fas" style='font-size:16px' th:text="'&#xf406;  ' + ${role}"></i></p>
+        </div>
+        <br>
+        <div class="row d-flex flex-wrap justify-content-center">
+            <div th:if="${role == 'Admin'}" class="col-lg-4 mb-5 mb-lg-0">
+                <div class="feature rounded-3 mb-3"><i class='fas fa-users' style='font-size:36px'></i></div>
+                <h2 class="h4 fw-bolder">Manajemen User</h2>
+                <p>Fitur ini dapat melihat semua user untuk role dokter, apoteker, dan pasien.</p>
+                <div class="d-flex flex-column">
+                    <a class="text-decoration-none" th:href="@{/pasien/viewall}">Lihat Daftar Pasien <i
+                            class='fas fa-arrow-right' style='font-size:13px'></i></a>
+                    <a class="text-decoration-none" th:href="@{/dokter/viewall}">Lihat Daftar Dokter <i
+                            class='fas fa-arrow-right' style='font-size:13px'></i></a>
+                    <a class="text-decoration-none" th:href="@{/apoteker/viewall}">Lihat Daftar Apoteker <i
+                            class='fas fa-arrow-right' style='font-size:13px'></i></a>
+                </div>
+            </div>
+            <div th:if="${role == 'Admin' || role == 'Dokter'}"  class="col-lg-4 mb-5 mb-lg-0">
+                <div class="feature rounded-3 mb-3"><i class='fas fa-calendar-alt' style='font-size:36px'></i></div>
+                <h2 class="h4 fw-bolder">Appointment</h2>
+                <p>Fitur ini dapat menampilkan jadwal appointment yang telah dibuat.</p>
+                <a class="text-decoration-none" th:href="@{/appointment/viewall}">Lihat Daftar Appointment <i
+                        class='fas fa-arrow-right' style='font-size:13px'></i></a>
+            </div>
+            <div th:if="${role == 'Admin' || role == 'Apoteker'}" class="col-lg-4 mb-5 mb-lg-0">
+                <div class="feature rounded-3 mb-3"><i class='fas fa-sticky-note' style='font-size:36px'></i></div>
+                <h2 class="h4 fw-bolder">Resep</h2>
+                <p>Fitur ini dapat menampilkan daftar resep yang sudah pernah dibuat oleh Dokter.</p>
+                <a class="text-decoration-none" th:href="@{/resep}">Lihat Daftar Resep <i
+                        class='fas fa-arrow-right' style='font-size:13px'></i></a>
+            </div>
+            <div th:if="${role == 'Admin' || role == 'Apoteker'}" class="col-lg-4 mb-5 mb-lg-0">
+                <div class="feature rounded-3 mb-3"><i class='fas fa-medkit' style='font-size:36px'></i></div>
+                <h2 class="h4 fw-bolder">Obat</h2>
+                <p>Fitur ini dapat menampilkan daftar obat yang sudah tersedia. </p>
+                <a class="text-decoration-none" th:href="@{/obat/viewall}">Lihat Daftar Obat <i
+                        class='fas fa-arrow-right' style='font-size:13px'></i></a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
